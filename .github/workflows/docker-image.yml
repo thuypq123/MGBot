@@ -13,7 +13,7 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag thuypq123/mg_bot:v1.0.0
     - name: Login to GHCR 
-      uses: docker/login-action@v2
+      uses: docker/login-action@v1
       with:
         registry: ghcr.io
         username: ${{ secrets.DOCKERHUB_USERNAME }}
