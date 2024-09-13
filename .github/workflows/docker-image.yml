@@ -32,7 +32,7 @@ jobs:
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
         task-definition: MG_bot2-revision5.json
-        container-name: my-container
+        container-name: MG_bot_Image
         image: image=thuypq123/mg_bot:v1.0.1 >> $GITHUB_OUTPUT
 
     - name: Deploy Amazon ECS task definition
