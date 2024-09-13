@@ -17,6 +17,6 @@ jobs:
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
-        password: ${{ secrets.GHTOKEN }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Push the Docker image
       run: docker push thuypq123/mg_bot:v1.0.0
