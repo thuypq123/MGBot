@@ -19,17 +19,23 @@ import (
 )
 
 func HandleMessageVoice(s *discordgo.Session, m *discordgo.MessageCreate) {
-	// Create a new session with the specified region
+
+	// Use the credentials from Secrets Manager
+	secretAws, err := utils.GetSecretAws()
+	if err != nil {
+		fmt.Println("Error getting AWS secret: ", err)
+		return
+	}
 	sess, err := session.NewSession(&aws.Config{
-		Region: aws.String("ap-southeast-1"), // Replace with your desired AWS region
+		Region: aws.String("ap-southeast-1"),
 		Credentials: credentials.NewStaticCredentials(
-			os.Getenv("AWS_ACCESS_KEY_ID"),
-			os.Getenv("AWS_SECRET_ACCESS_KEY"),
+			secretAws.AccessKeyId,
+			secretAws.SecretAccessKey,
 			"", // Use empty session token
 		),
 	})
 	if err != nil {
-		fmt.Println("Error creating new session: ", err)
+		fmt.Println("Error creating new session with credentials: ", err)
 		return
 	}
 
