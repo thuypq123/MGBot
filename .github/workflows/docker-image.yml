@@ -1,0 +1,16 @@
+name: Docker Image CI
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag thuypq123:$(date +%s)
+    - name: Push docker
+      run: docker push thuypq123:$(date +%s)
