@@ -14,6 +14,7 @@ COPY . .
 RUN apk add --no-cache ca-certificates
 RUN apk update 
 RUN apk add --no-cache opus opus-dev alsa-lib alsa-lib-dev 
+RUN apk add --no-cache ffmpeg
 RUN apk add --no-cache bash
 RUN go clean -modcache  
 RUN go mod download 

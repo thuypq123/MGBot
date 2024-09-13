@@ -4,6 +4,7 @@ import (
 	"discord_bot/internal/utils"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/sqs"
 )
@@ -22,8 +23,8 @@ func GetQueueURL(sess *session.Session, queue *string) (*sqs.GetQueueUrlOutput, 
 	return result, nil
 }
 
-func SendMsg(sess *session.Session, queueURL *string, m string) error {
-	svc := sqs.New(sess)
+func SendMsg(sess *session.Session, cred *credentials.Credentials, queueURL *string, m string) error {
+	svc := sqs.New(sess, &aws.Config{Credentials: cred})
 
 	idMessage := utils.Uuid()
 
@@ -41,10 +42,9 @@ func SendMsg(sess *session.Session, queueURL *string, m string) error {
 	return nil
 }
 
-func GetMessages(sess *session.Session, queueURL *string) (*sqs.ReceiveMessageOutput, error) {
+func GetMessages(sess *session.Session, cred *credentials.Credentials, queueURL *string) (*sqs.ReceiveMessageOutput, error) {
 	// Create an SQS service client
-	svc := sqs.New(sess)
-
+	svc := sqs.New(sess, &aws.Config{Credentials: cred})
 	// snippet-start:[sqs.go.receive_messages.call]
 	msgResult, err := svc.ReceiveMessage(&sqs.ReceiveMessageInput{
 		AttributeNames: []*string{

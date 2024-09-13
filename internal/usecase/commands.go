@@ -10,6 +10,8 @@ import (
 
 	constandvar "discord_bot/internal/constant"
 
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/bwmarrin/dgvoice"
 	"github.com/bwmarrin/discordgo"
@@ -17,10 +19,20 @@ import (
 )
 
 func HandleMessageVoice(s *discordgo.Session, m *discordgo.MessageCreate) {
-	sess := session.Must(session.NewSessionWithOptions(session.Options{
-		SharedConfigState: session.SharedConfigEnable,
-		Profile:           "default",
-	}))
+	// Create a new session with the specified region
+	sess, err := session.NewSession(&aws.Config{
+		Region: aws.String("ap-southeast-1"), // Replace with your desired AWS region
+		Credentials: credentials.NewStaticCredentials(
+			os.Getenv("AWS_ACCESS_KEY_ID"),
+			os.Getenv("AWS_SECRET_ACCESS_KEY"),
+			"", // Use empty session token
+		),
+	})
+	if err != nil {
+		fmt.Println("Error creating new session: ", err)
+		return
+	}
+
 	messageJson, err := json.Marshal(m)
 	if err != nil {
 		fmt.Println("Error marshalling message to json: ", err)
@@ -34,7 +46,7 @@ func HandleMessageVoice(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	// execute join function
 	botJoinChannel(s, m)
-	repository.SendMsg(sess, &queueURL, string(messageJson))
+	repository.SendMsg(sess, nil, &queueURL, string(messageJson))
 	if m.Author.ID == s.State.User.ID {
 		fmt.Println("Bot is already in the voice channel")
 		return
@@ -46,7 +58,7 @@ func HandleMessageVoice(s *discordgo.Session, m *discordgo.MessageCreate) {
 func say(s *discordgo.Session, m *discordgo.MessageCreate, sess *session.Session, queueURL string) {
 	for {
 		structInfo := &discordgo.MessageCreate{}
-		messages, err := repository.GetMessages(sess, &queueURL)
+		messages, err := repository.GetMessages(sess, nil, &queueURL)
 		if err != nil {
 			fmt.Println("Error getting messages: ", err)
 			return

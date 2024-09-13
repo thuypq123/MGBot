@@ -1,0 +1,32 @@
+[33mcommit b702f87e531e598f440728b7024bb99f20b7c378[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: thuypq123 <lmthuy37@gmail.com>
+Date:   Sat Sep 14 00:04:51 2024 +0700
+
+    update dokcer file
+
+[33mcommit cdb41b4abdc752c3c3a5297d560c59d8f267bc1e[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 79f906b 5cf267e
+Author: Lê Minh Thủy <lmthuy37@gmail.com>
+Date:   Tue Sep 10 16:29:08 2024 +0700
+
+    Merge pull request #1 from thuypq123:fix/edit-dockerfile
+    
+    fix: edit docker file
+
+[33mcommit 5cf267e1efd6c95c809d93089d2480e31316f87d[m[33m ([m[1;31morigin/fix/edit-dockerfile[m[33m)[m
+Author: thuylm2 <thuylm2@hdbank.com.vn>
+Date:   Tue Sep 10 16:26:55 2024 +0700
+
+    fix: edit docker file
+
+[33mcommit 79f906b7719be0841b08fe9a6f1fc9b8399fb3db[m
+Author: thuypq123 <lmthuy37@gmail.com>
+Date:   Tue Sep 10 15:14:27 2024 +0700
+
+    INIT
+
+[33mcommit 15bcea286fbd2434f64e0f78731d7e6a1b8cfb39[m
+Author: Lê Minh Thủy <lmthuy37@gmail.com>
+Date:   Mon Sep 9 15:39:49 2024 +0700
+
+    Initial commit
