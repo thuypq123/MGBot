@@ -1,15 +1,14 @@
+
 name: Docker Image CI
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
   push:
     branches:
       - main
-
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
+
 
     steps:
     - uses: actions/checkout@v4
