@@ -26,19 +26,26 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
-
-    - name: Fill in the new image ID in the Amazon ECS task definition
-      id: task-def
-      uses: aws-actions/amazon-ecs-render-task-definition@v1
-      with:
-        task-definition: MG_bot2-revision5.json
-        container-name: MG_bot_Image
-        image: image=thuypq123/mg_bot:v1.0.1 >> $GITHUB_OUTPUT
-
-    - name: Deploy Amazon ECS task definition
+    - name: Deploy to Amazon ECS
       uses: aws-actions/amazon-ecs-deploy-task-definition@v2
       with:
-        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        task-definition: MG_bot2-revision5.json
         service: Bot_Discord_Service
         cluster: DevClusters
         wait-for-service-stability: true
+
+    # - name: Fill in the new image ID in the Amazon ECS task definition
+    #   id: task-def
+    #   uses: aws-actions/amazon-ecs-render-task-definition@v1
+    #   with:
+    #     task-definition: MG_bot2-revision5.json
+    #     container-name: MG_bot_Image
+    #     image: image=thuypq123/mg_bot:v1.0.1 >> $GITHUB_OUTPUT
+
+    # - name: Deploy Amazon ECS task definition
+    #   uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+    #   with:
+    #     task-definition: ${{ steps.task-def.outputs.task-definition }}
+    #     service: Bot_Discord_Service
+    #     cluster: DevClusters
+    #     wait-for-service-stability: true
