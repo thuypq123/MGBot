@@ -1,26 +1,21 @@
 name: Docker Image CI
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
 on:
   push:
     branches:
       - main
-
 jobs:
-
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag thuypq123/mg_bot:v1.0.0
-    - name: Login to GHCR 
       run: docker build . --file Dockerfile --tag thuypq123/mg_bot:${{ github.event.pull_request.number }}
+      run: docker build . --file Dockerfile --tag thuypq123/mg_bot:v1.0.1
     - name: Login to Docker Hub
       run: echo '${{ secrets.DOCKER_PASSWORD }}' | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-    - name: Pull the Docker image
-      run: docker pull thuypq123/mg_bot:v1.0.0
     - name: Push the Docker image
       run: docker push thuypq123/mg_bot:${{ github.event.pull_request.number }}
+      run: docker push thuypq123/mg_bot:v1.0.1
     - name: Success
       run: echo "Success"
