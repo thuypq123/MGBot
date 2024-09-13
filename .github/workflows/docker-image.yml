@@ -13,21 +13,7 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag thuypq123/mg_bot:v1.0.0
     - name: Login to GHCR 
-      uses: docker/login-action@v2
-      with:
-        registry: ghcr.io
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        # ecr: auto
-        # logout: true
-    - name: Check Docker login status
-      run: |
-        echo "Logging into ghcr.io..."
-        if ! docker login ghcr.io -u thuypq123 -p ${{ secrets.DOCKER_PASSWORD }}; then
-          echo "Error: Error response from daemon: Get \"https://ghcr.io/v2/\": denied: denied"
-          exit 1
-        fi
-        echo "Logged into ghcr.io"
+      run: echo '${{ secrets.DOCKER_PASSWORD }}' | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
     - name: Pull the Docker image
       run: docker pull thuypq123/mg_bot:v1.0.0
     - name: Success
