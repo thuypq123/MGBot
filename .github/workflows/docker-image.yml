@@ -12,7 +12,11 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag thuypq123/mg_bot:v1.0.0
-    - name: Push the Docker image
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+    - name: Login to GHCR 
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GHTOKEN }}
     - name: Push the Docker image
       run: docker push thuypq123/mg_bot:v1.0.0
