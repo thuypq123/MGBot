@@ -6,20 +6,24 @@ import (
 	"os/signal"
 	"syscall"
 
-	usecase "discord_bot/internal/usecase"
+	"discord_bot/internal/usecase"
 	"discord_bot/internal/utils"
 
 	"github.com/bwmarrin/discordgo"
 )
 
 func main() {
-	envDiscordToken := os.Getenv("DISCORD_BOT_TOKEN")
-	if envDiscordToken == "" {
+	envDiscordToken, err := utils.GetSecretAws()
+	if err != nil {
+		fmt.Println("Error getting AWS secret: ", err)
+		return
+	}
+	if envDiscordToken.BotToken == "" {
 		fmt.Println("DISCORD_BOT_TOKEN is not set")
 		return
 	}
-	fmt.Println("DISCORD_BOT_TOKEN: ", utils.MaskSensitiveString(envDiscordToken))
-	discord, err := createDiscordSession(envDiscordToken)
+	fmt.Println("DISCORD_BOT_TOKEN: ", utils.MaskSensitiveString(envDiscordToken.BotToken))
+	discord, err := createDiscordSession(envDiscordToken.BotToken)
 	if err != nil {
 		fmt.Println("Error creating Discord session: ", err)
 		return

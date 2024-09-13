@@ -11,6 +11,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag thuypq123:$(date +%s)
+      run: docker build . --file Dockerfile --tag thuypq123/mg_bot:v1.0.0
     - name: Push docker
-      run: docker push thuypq123:$(date +%s)
+      run: docker push thuypq123/mg_bot:v1.0.0
