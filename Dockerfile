@@ -27,7 +27,7 @@ ENV GOARCH=amd64
 
 # Install build dependencies for gopus
 RUN apk add --no-cache build-base
-RUN  go build -o main cmd/main.go 
+RUN go build -ldflags "-w" -o main cmd/main.go
 
 # FROM ubuntu
 
