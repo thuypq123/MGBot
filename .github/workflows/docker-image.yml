@@ -31,7 +31,7 @@ jobs:
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: task-definition.json
+        task-definition: MG_bot2-revision5.json
         container-name: my-container
         image: image=thuypq123/mg_bot:v1.0.1 >> $GITHUB_OUTPUT
 
