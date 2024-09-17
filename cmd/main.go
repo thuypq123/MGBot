@@ -35,7 +35,6 @@ func main() {
 		return
 	}
 	discord.AddHandler(usecase.HandleMessageVoice)
-
 	waitForExitSignal()
 
 	discord.Close()

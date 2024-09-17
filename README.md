@@ -42,3 +42,5 @@ This Discord bot integrates with Amazon Simple Queue Service (SQS) for enhanced 
 ## Configuration
 
 Modify `internal/constant/const.go` to change the bot's command prefix or other constants: !!
+
+<!-- Dummy -->
