@@ -1,4 +1,4 @@
-name: Pipeline For Deploy ECS  🚗
+name: Pipeline For Deploy ECS 🚗
 run-name: ${{ github.actor }} Deploy ECS 🚗
 on:
   push:
@@ -15,6 +15,8 @@ jobs:
       run: echo '${{ secrets.DOCKER_PASSWORD }}' | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
   push_docker_file:
     needs: build
+    runs-on: ubuntu-latest
+    steps:
     - name: Push the Docker image
       run: docker push thuypq123/mg_bot:v1.0.1
     - name: Configure AWS credentials 🛠️
