@@ -1,11 +1,11 @@
-name: Pipeline For Deploy ECS 🚗
+name: Pipeline For Deploy ECS  🚗
 run-name: ${{ github.actor }} Deploy ECS 🚗
 on:
   push:
     branches:
       - main
 jobs:
-  Build_Push_Docker:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -15,10 +15,6 @@ jobs:
       run: echo '${{ secrets.DOCKER_PASSWORD }}' | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
     - name: Push the Docker image
       run: docker push thuypq123/mg_bot:v1.0.1
-  Aws_Deploy:
-    needs: Build_Push_Docker
-    runs-on: ubuntu-latest
-    steps:
     - name: Configure AWS credentials 🛠️
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -37,3 +33,19 @@ jobs:
         wait-for-service-stability: true
     - name: CONGRATULATIONS! Your ECS service has been deployed successfully! 🎉🎉🎉🎉🎉🎉🎉
       run: echo "CONGRATULATIONS! Your ECS service has been deployed successfully!"
+
+    # - name: Fill in the new image ID in the Amazon ECS task definition
+    #   id: task-def
+    #   uses: aws-actions/amazon-ecs-render-task-definition@v1
+    #   with:
+    #     task-definition: MG_bot2-revision5.json
+    #     container-name: MG_bot_Image
+    #     image: image=thuypq123/mg_bot:v1.0.1 >> $GITHUB_OUTPUT
+
+    # - name: Deploy Amazon ECS task definition
+    #   uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+    #   with:
+    #     task-definition: ${{ steps.task-def.outputs.task-definition }}
+    #     service: Bot_Discord_Service
+    #     cluster: DevClusters
+    #     wait-for-service-stability: true
